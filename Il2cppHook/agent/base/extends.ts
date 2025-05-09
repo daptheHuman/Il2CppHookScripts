@@ -123,6 +123,8 @@ globalThis.watchMemory = (mPtr: NativePointer, length: number = 0x10) => {
         pagesTotal: number              // pagesTotal: 被访问的内存范围的总页数
         private mdFrom: Module
         private mdAddress: Module
+        threadId: number
+        context: CpuContext
 
         constructor(detail: MemoryAccessDetails) {
             this.operation = detail.operation
@@ -134,6 +136,8 @@ globalThis.watchMemory = (mPtr: NativePointer, length: number = 0x10) => {
             this.pagesTotal = detail.pagesTotal
             this.mdAddress = Process.findModuleByAddress(this.address)!
             this.mdFrom = Process.findModuleByAddress(this.from)!
+            this.threadId = detail.threadId;
+            this.context = detail.context;
         }
 
         public tostring(): string {
